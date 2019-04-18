@@ -31,6 +31,8 @@ namespace CalendarRazor.Pages
                 return Page();
             }
             await uow.AddTypeWithTask(Item);
+            //await uow.TasksRepo.AddAsync(new CalendarTask());
+            //await uow.SaveChanges();
 
             return RedirectToPage("./Index");
         }

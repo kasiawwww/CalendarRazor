@@ -1,0 +1,47 @@
+﻿@model IndexModel
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            @foreach (var date in Model.Dates)
+            {
+                <th>@date.DayOfWeek @(date.Day).@date.Month</th>
+            }
+
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < 24; i++)
+        {
+        <tr>
+            <td>@i:00</td>
+            @foreach (var date in Model.Dates)
+            {
+                var tasks = Model.Tasks.Where(a => a.StartDate.Day == date.Day).ToList();
+
+                if (tasks.Count > 0)
+                {
+                    foreach (var task in tasks)
+                    {
+                        if (task != null && task.StartDate != null & task.StartDate.Hour == i)
+                        {
+                            <td id="d_@(date.Day)_@i"><partial name="_Task" model="@task" /></td>
+                        }
+                        else
+                        {
+                            <td id="d_@(date.Day)_@i"></td>
+                        }
+                    }
+                }
+                else
+                {
+                    <td id="d_@(date.Day)_@i"></td>
+                }
+
+            }
+
+        </tr>
+        }
+    </tbody>
+
+</table>
